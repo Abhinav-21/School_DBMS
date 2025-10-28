@@ -101,7 +101,7 @@ export default function AddSchoolPage() {
               >
                 School Name
               </label>
-              <input
+              <input required
                 id="name"
                 type="text"
                 {...register('name', { required: 'School name is required' })}
@@ -122,7 +122,7 @@ export default function AddSchoolPage() {
               >
                 Contact Number
               </label>
-              <input
+              <input required
                 id="contact"
                 type="number"
                 {...register('contact', {
@@ -148,7 +148,7 @@ export default function AddSchoolPage() {
             >
               Email ID
             </label>
-            <input
+            <input required
               id="email_id"
               type="email" // Use type="email" for browser validation
               {...register('email_id', {
@@ -175,7 +175,7 @@ export default function AddSchoolPage() {
             >
               Address
             </label>
-            <input
+            <input required
               id="address"
               type="text"
               {...register('address', { required: 'Address is required' })}
@@ -198,7 +198,7 @@ export default function AddSchoolPage() {
               >
                 City
               </label>
-              <input
+              <input required
                 id="city"
                 type="text"
                 {...register('city', { required: 'City is required' })}
@@ -219,7 +219,7 @@ export default function AddSchoolPage() {
               >
                 State
               </label>
-              <input
+              <input required
                 id="state"
                 type="text"
                 {...register('state', { required: 'State is required' })}
@@ -241,7 +241,7 @@ export default function AddSchoolPage() {
             >
               School Image
             </label>
-            <input
+            <input required
               id="image"
               type="file" // Use type="file"
               accept="image/png, image/jpeg, image/webp"

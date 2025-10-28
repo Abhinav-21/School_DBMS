@@ -99,20 +99,34 @@ export async function POST(request: Request) {
     });
 
     // 4. SEND A SUCCESS RESPONSE
-    // We return the new school data (including the ID)
+    // Convert non-JSON-serializable fields (BigInt) to strings before returning
+    const serializableSchool = {
+      ...newSchool,
+      contact: newSchool.contact.toString(),
+    };
+
     return NextResponse.json(
       {
         message: 'School added successfully!',
-        school: newSchool,
+        school: serializableSchool,
       },
       { status: 201 } // 201 means "Created"
     );
-  } catch (error) {
+  } catch (error: any) {
+    // Log full error for debugging
     console.error('Error in POST /api/add-school:', error);
-    // This is a general "catch-all" error
-    return NextResponse.json(
-      { error: 'An internal server error occurred.' },
-      { status: 500 }
-    );
+
+    // In development return error details to help debugging; in production keep it generic
+    const responseBody: any = {
+      error: 'An internal server error occurred.',
+    };
+    if (process.env.NODE_ENV !== 'production') {
+      responseBody.details = {
+        message: error?.message,
+        stack: error?.stack,
+      };
+    }
+
+    return NextResponse.json(responseBody, { status: 500 });
   }
 }
