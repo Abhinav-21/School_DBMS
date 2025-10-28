@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx dotenv -e .env.development.local -- npx prisma generate   && next build",
+    "generate": "dotenv -e .env.development.local -- prisma generate",
+    "build": "npm run generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "npx dotenv -e .env.development.local -- npx prisma generate  "
+    "postinstall": "npm run generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
