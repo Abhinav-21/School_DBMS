@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import SchoolCard from '@/app/components/SchoolCard'; // Adjust path if needed
+import SchoolCard from '@/app/components/SchoolCard';
+import { prisma } from '@/lib/prisma';
 
 // Define the School type
 type School = {
@@ -9,10 +9,6 @@ type School = {
   city: string;
   image: string;
 };
-
-// Initialize Prisma Client
-// We can do this here because this is a Server Component
-const prisma = new PrismaClient();
 
 // This function fetches the data directly from the database
 async function getSchools() {

@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import { put } from '@vercel/blob'; // For image uploads
 import { z } from 'zod'; // For validation
-import { PrismaClient } from '@prisma/client';
-
-// Initialize Prisma Client
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma';
 
 // Define a schema for form validation using Zod
 // This ensures all data is correct before we even touch the database

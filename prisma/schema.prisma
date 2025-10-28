@@ -7,8 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL") // Use pooled connection for production
-  directUrl = env("DATABASE_URL_UNPOOLED") // Use direct connection for migrations and local development
+  url = env("DATABASE_URL")
 }
 
 // This is your 'schools' table definition
