@@ -1,5 +1,7 @@
+
 import SchoolCard from '@/app/components/SchoolCard';
 import { prisma } from '@/lib/prisma';
+import Link from 'next/link';
 
 // Define the School type
 type School = {
@@ -34,28 +36,32 @@ export default async function ShowSchoolsPage() {
   const schools = await getSchools();
 
   return (
-    <main className="mx-auto max-w-7xl p-6 sm:p-8">
-      <h1 className="mb-8 text-3xl font-bold tracking-tight text-gray-900">
-        Registered Schools
-      </h1>
+    <main className="bg-gray-50 min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between pb-8 border-b border-gray-200">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Registered Schools
+          </h1>
+          <Link href="/add-school" className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Add School
+          </Link>
+        </div>
 
-      {/* --- Empty State --- */}
-      {/* Show a message if no schools are in the database yet */}
-      {schools.length === 0 ? (
-        <div className="flex h-60 items-center justify-center rounded-lg border-2 border-dashed border-gray-300">
-          <p className="text-gray-500">
-            No schools have been added yet.
-          </p>
-        </div>
-      ) : (
-        /* --- Responsive Grid --- */
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {schools.map((school: School) => (
-            // The `key` prop is essential for React lists
-            <SchoolCard key={school.id} school={school} />
-          ))}
-        </div>
-      )}
+        {/* --- Empty State --- */}
+        {schools.length === 0 ? (
+          <div className="text-center py-24">
+            <h2 className="text-lg font-medium text-gray-900">No schools yet</h2>
+            <p className="mt-1 text-sm text-gray-500">Get started by adding a new school.</p>
+          </div>
+        ) : (
+          /* --- Responsive Grid --- */
+          <div className="grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {schools.map((school: School) => (
+              <SchoolCard key={school.id} school={school} />
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   );
 }

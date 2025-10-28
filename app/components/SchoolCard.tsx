@@ -20,9 +20,8 @@ export default function SchoolCard({ school }: SchoolCardProps) {
         <Image
           src={school.image}
           alt={`Image of ${school.name}`}
-          layout="fill"
-          objectFit="cover" // This makes the image cover the area, like on an e-commerce site
-          className="bg-gray-100" // A light background for while the image loads
+          fill={true}
+          className="object-cover bg-gray-100" // A light background for while the image loads
         />
       </div>
 

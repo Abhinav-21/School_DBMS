@@ -5,6 +5,7 @@
 // We only need react-hook-form and react
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
+import Link from 'next/link';
 
 // Define a simple type for our form fields
 // This is much simpler than Zod
@@ -83,202 +84,97 @@ export default function AddSchoolPage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 md:p-12 bg-gray-50">
-      <div className="w-full max-w-3xl bg-white p-6 md:p-8 rounded-lg shadow-md">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-          Add New School
-        </h1>
+    <main className="bg-gray-50 min-h-screen">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between pb-8 border-b border-gray-200">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Add a New School
+          </h1>
+          <Link href="/show-school" className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            View Schools
+          </Link>
+        </div>
 
-        {/* This is the form element, we use handleSubmit from react-hook-form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Form fields are in a responsive grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* School Name */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                School Name
-              </label>
-              <input required
-                id="name"
-                type="text"
-                {...register('name', { required: 'School name is required' })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.name.message}
-                </p>
-              )}
+        <div className="mt-10">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-8 rounded-lg shadow-sm">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="sm:col-span-3">
+                <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">School Name</label>
+                <div className="mt-2">
+                  <input type="text" id="name" {...register('name', { required: 'School name is required' })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+                {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label htmlFor="contact" className="block text-sm font-medium leading-6 text-gray-900">Contact Number</label>
+                <div className="mt-2">
+                  <input type="number" id="contact" {...register('contact', { required: 'Contact is required', minLength: { value: 10, message: 'Must be 10 digits' }, maxLength: { value: 10, message: 'Must be 10 digits' } })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+                {errors.contact && <p className="mt-2 text-sm text-red-600">{errors.contact.message}</p>}
+              </div>
+
+              <div className="col-span-full">
+                <label htmlFor="email_id" className="block text-sm font-medium leading-6 text-gray-900">Email ID</label>
+                <div className="mt-2">
+                  <input type="email" id="email_id" {...register('email_id', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+                {errors.email_id && <p className="mt-2 text-sm text-red-600">{errors.email_id.message}</p>}
+              </div>
+
+              <div className="col-span-full">
+                <label htmlFor="address" className="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                <div className="mt-2">
+                  <input type="text" id="address" {...register('address', { required: 'Address is required' })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-.sm sm:leading-6" />
+                </div>
+                {errors.address && <p className="mt-2 text-sm text-red-600">{errors.address.message}</p>}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">City</label>
+                <div className="mt-2">
+                  <input type="text" id="city" {...register('city', { required: 'City is required' })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+                {errors.city && <p className="mt-2 text-sm text-red-600">{errors.city.message}</p>}
+              </div>
+
+              <div className="sm:col-span-3">
+                <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">State</label>
+                <div className="mt-2">
+                  <input type="text" id="state" {...register('state', { required: 'State is required' })} className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                </div>
+                {errors.state && <p className="mt-2 text-sm text-red-600">{errors.state.message}</p>}
+              </div>
+
+              <div className="col-span-full">
+                <label htmlFor="image" className="block text-sm font-medium leading-6 text-gray-900">School Image</label>
+                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                  <div className="text-center">
+                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                      <label htmlFor="image" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                        <span>Upload a file</span>
+                        <input id="image" type="file" accept="image/png, image/jpeg, image/webp" {...register('image', { required: 'Image is required' })} className="sr-only" />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs leading-5 text-gray-600">PNG, JPG, WEBP up to 10MB</p>
+                  </div>
+                </div>
+                {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image.message}</p>}
+              </div>
             </div>
 
-            {/* Contact Number */}
-            <div>
-              <label
-                htmlFor="contact"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Contact Number
-              </label>
-              <input required
-                id="contact"
-                type="number"
-                {...register('contact', {
-                  required: 'Contact is required',
-                  minLength: { value: 10, message: 'Must be 10 digits' },
-                  maxLength: { value: 10, message: 'Must be 10 digits' },
-                })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              />
-              {errors.contact && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.contact.message}
-                </p>
-              )}
+            {serverError && <p className="text-sm font-medium text-red-600">{serverError}</p>}
+            {successMessage && <p className="text-sm font-medium text-green-600">{successMessage}</p>}
+
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <button type="button" className="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+              <button type="submit" disabled={isSubmitting} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-gray-400">
+                {isSubmitting ? 'Submitting...' : 'Add School'}
+              </button>
             </div>
-          </div>
-
-          {/* Email ID */}
-          <div>
-            <label
-              htmlFor="email_id"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email ID
-            </label>
-            <input required
-              id="email_id"
-              type="email" // Use type="email" for browser validation
-              {...register('email_id', {
-                required: 'Email is required',
-                pattern: {
-                  value: /^\S+@\S+$/i, // Simple email regex
-                  message: 'Invalid email address',
-                },
-              })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-              {errors.email_id && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.email_id.message}
-              </p>
-            )}
-          </div>
-
-          {/* Address */}
-          <div>
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Address
-            </label>
-            <input required
-              id="address"
-              type="text"
-              {...register('address', { required: 'Address is required' })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-            />
-            {errors.address && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.address.message}
-              </p>
-            )}
-          </div>
-
-          {/* Responsive grid for City and State */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* City */}
-            <div>
-              <label
-                htmlFor="city"
-                className="block text-sm font-medium text-gray-700"
-              >
-                City
-              </label>
-              <input required
-                id="city"
-                type="text"
-                {...register('city', { required: 'City is required' })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              />
-              {errors.city && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.city.message}
-                </p>
-              )}
-            </div>
-
-            {/* State */}
-            <div>
-              <label
-                htmlFor="state"
-                className="block text-sm font-medium text-gray-700"
-              >
-                State
-              </label>
-              <input required
-                id="state"
-                type="text"
-                {...register('state', { required: 'State is required' })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-              />
-              {errors.state && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.state.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Image Upload */}
-          <div>
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-700"
-            >
-              School Image
-            </label>
-            <input required
-              id="image"
-              type="file" // Use type="file"
-              accept="image/png, image/jpeg, image/webp"
-              {...register('image', { required: 'Image is required' })}
-              className="mt-1 block w-full text-sm text-gray-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-md file:border-0
-                file:text-sm file:font-semibold
-                file:bg-indigo-50 file:text-indigo-700
-                hover:file:bg-indigo-100"
-            />
-            {errors.image && (
-              <p className="mt-1 text-sm text-red-600">
-                {errors.image.message}
-              </p>
-            )}
-          </div>
-
-          {/* Server Messages */}
-          {serverError && (
-            <p className="text-sm text-red-600">{serverError}</p>
-          )}
-          {successMessage && (
-            <p className="text-sm text-green-600">{successMessage}</p>
-          )}
-
-          {/* Submit Button */}
-          <div>
-            <button
-              type="submit"
-              disabled={isSubmitting} // Disable button while submitting
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400"
-            >
-              {isSubmitting ? 'Submitting...' : 'Add School'}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </main>
   );
