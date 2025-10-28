@@ -1,31 +1,21 @@
+
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 
-export async function GET() {
-  try {
-    // Simple lightweight connectivity check
-    await prisma.$queryRaw`SELECT 1`;
+export async function GET(request: Request) {
+  const isDebug = process.env.DEBUG === 'true' || process.env.NODE_ENV !== 'production';
 
-    return NextResponse.json({
-      ok: true,
-      db: 'connected',
-      env: {
-        DEBUG: process.env.DEBUG ?? null,
-        DATABASE_URL: process.env.DATABASE_URL ? 'present' : 'missing',
-        DATABASE_URL_UNPOOLED: process.env.DATABASE_URL_UNPOOLED ? 'present' : 'missing',
-        BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN ? 'present' : 'missing',
-      },
-    });
-  } catch (error: any) {
-    console.error('Debug endpoint error:', error);
-    return NextResponse.json(
-      {
-        ok: false,
-        error: error?.message,
-        // Only include stack when DEBUG=true to avoid leaking secrets in production
-        stack: process.env.DEBUG === 'true' ? error?.stack : undefined,
-      },
-      { status: 500 }
-    );
+  if (request.headers.get('x-debug-on')) {
+    process.env.DEBUG = 'true';
+    return NextResponse.json({ message: 'Debug mode enabled.' });
   }
+
+  if (request.headers.get('x-debug-off')) {
+    process.env.DEBUG = 'false';
+    return NextResponse.json({ message: 'Debug mode disabled.' });
+  }
+
+  return NextResponse.json({
+    message: 'Debug endpoint. Use x-debug-on/x-debug-off headers to control.',
+    isDebug,
+  });
 }
