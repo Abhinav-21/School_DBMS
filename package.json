@@ -8,7 +8,7 @@
     "build": "npm run generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "npm run generate"
+    "postinstall": "npm run generate && node ./scripts/copy-prisma-engines.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
