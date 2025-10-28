@@ -1,11 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    devIndicators: {
-        allowedDevOrigins: [
-            "https://3000-firebase-schooldbms-1761665538307.cluster-iktsryn7xnhpexlu6255bftka4.cloudworkstations.dev"
-        ]
-    },
     images: {
         remotePatterns: [
             {
