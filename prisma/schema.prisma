@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql" // We are using Vercel Postgres (Neon)
+  
+  // These are the CRITICAL lines
+  // They tell Prisma to use the variables from Vercel
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// This is your 'schools' table definition
+model School {
+  id        Int      @id @default(autoincrement())
+  name      String
+  address   String
+  city      String
+  state     String
+  contact   BigInt   
+  image     String   // This will store the URL from Vercel Blob
+  email_id  String
+
+  createdAt DateTime @default(now())
+}
