@@ -6,12 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql" // We are using Vercel Postgres (Neon)
-  
-  // These are the CRITICAL lines
-  // They tell Prisma to use the variables from Vercel
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
+  url = env("DATABASE_URL") // Use pooled connection
+  directUrl = env("DATABASE_URL_UNPOOLED") // Use direct connection
 }
 
 // This is your 'schools' table definition
