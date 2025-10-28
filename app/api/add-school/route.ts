@@ -116,11 +116,14 @@ export async function POST(request: Request) {
     // Log full error for debugging
     console.error('Error in POST /api/add-school:', error);
 
-    // In development return error details to help debugging; in production keep it generic
+    // Build a safe error response. Return detailed error when DEBUG=true or not in production.
     const responseBody: any = {
       error: 'An internal server error occurred.',
     };
-    if (process.env.NODE_ENV !== 'production') {
+
+    // Allow enabling detailed error output on deployment by setting DEBUG=true in your Vercel env vars.
+    const showDetails = process.env.DEBUG === 'true' || process.env.NODE_ENV !== 'production';
+    if (showDetails) {
       responseBody.details = {
         message: error?.message,
         stack: error?.stack,
